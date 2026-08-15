@@ -1,25 +1,16 @@
 /* Hộp công cụ nhà đất - hệ thiết kế riêng (KHÁC nút dữ liệu giá đất).
-   Palette: Cobalt + xám lạnh. Không xanh lục, không đất nung. Bo góc 8px.
+   Palette: Cobalt + xám lạnh. CHỈ LIGHT, không dark. Bo góc 8px.
    Font system sans + mono cho số. Không em-dash ở chuỗi hiển thị. */
 
 :root{
   --bg:#f3f6fb; --surface:#ffffff; --panel:#eaeff7; --line:#d9e0ec;
   --ink:#131a26; --muted:#556074; --faint:#8791a4;
   --accent:#2b5ce0; --accent-2:#1c44b8; --accent-soft:rgba(43,92,224,.09);
-  --band:#101a2e; --band-ink:#eef3fb; --band-muted:#93a3c2;
+  --hero:#eef2fb; --hero-muted:#5a6a8a;
   --r:8px; --maxw:960px;
   --sans:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --mono:ui-monospace,'Cascadia Code','Segoe UI Mono',Consolas,monospace;
-  --shadow:0 1px 2px rgba(19,26,38,.05),0 16px 40px -28px rgba(20,40,90,.5);
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#0d1420; --surface:#141c2b; --panel:#19233a; --line:#26324c;
-    --ink:#e6ecf6; --muted:#93a1bb; --faint:#66748f;
-    --accent:#5c86f6; --accent-2:#7ba2ff; --accent-soft:rgba(92,134,246,.15);
-    --band:#080d17; --band-ink:#eef3fb; --band-muted:#8393b1;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 18px 44px -30px rgba(0,0,0,.75);
-  }
+  --shadow:0 1px 2px rgba(19,26,38,.05),0 16px 40px -28px rgba(20,40,90,.28);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -48,14 +39,14 @@ a:hover{color:var(--accent-2)}
   @keyframes rise{to{opacity:1;transform:none}}
 }
 
-/* HERO */
-.hero{background:var(--band);color:var(--band-ink);border-bottom:3px solid var(--accent)}
+/* HERO sáng */
+.hero{background:var(--hero);color:var(--ink);border-bottom:3px solid var(--accent)}
 .hero .wrap{padding:58px 22px 50px}
 .kick{display:inline-flex;align-items:center;gap:10px;font:600 12px/1 var(--sans);
-  letter-spacing:2px;text-transform:uppercase;color:var(--band-muted);margin:0 0 18px}
+  letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
 .kick::before{content:"";width:24px;height:2px;background:var(--accent)}
 .hero h1{margin:0 0 14px;font-weight:700;font-size:clamp(29px,5vw,44px);line-height:1.12;letter-spacing:-1px;max-width:17ch}
-.hero p{margin:0;color:var(--band-muted);font-size:18px;max-width:56ch}
+.hero p{margin:0;color:var(--hero-muted);font-size:18px;max-width:56ch}
 
 main{padding:48px 0 36px}
 section{margin-bottom:48px}
@@ -90,16 +81,18 @@ h2{font-weight:700;font-size:23px;letter-spacing:-.4px;margin:0 0 6px}
 .inp .u{color:var(--faint);font:500 13px var(--sans);padding-left:8px}
 .field input::placeholder{color:var(--faint)}
 
-.out{background:var(--band);color:var(--band-ink);border-radius:var(--r);padding:24px;position:sticky;top:76px}
-.out h3{margin:0 0 18px;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:var(--band-muted)}
-.out .big{font:700 46px/1 var(--mono);color:#fff;letter-spacing:-1.5px}
-.out .big .u{font:600 18px var(--sans);color:var(--band-muted);letter-spacing:0;margin-left:6px}
-.out .sub{color:var(--band-muted);font-size:14px;margin:8px 0 22px}
-.out .grid{display:grid;gap:1px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden}
-.out .grid .c{background:var(--band);padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.out .grid .c .k{color:var(--band-muted);font-size:13.5px}
-.out .grid .c .v{font:600 17px var(--mono);color:#fff}
-.out .empty{color:var(--band-muted);font-size:14px}
+/* Panel kết quả - sáng, số accent */
+.out{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:24px;position:sticky;top:76px}
+.out h3{margin:0 0 18px;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.out .big{font:700 46px/1 var(--mono);color:var(--accent);letter-spacing:-1.5px}
+.out .big .u{font:600 18px var(--sans);color:var(--muted);letter-spacing:0;margin-left:6px}
+.out .sub{color:var(--muted);font-size:14px;margin:8px 0 22px}
+.out .grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.out .grid .c{background:var(--surface);padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.out .grid .c .k{color:var(--muted);font-size:13.5px}
+.out .grid .c .v{font:600 17px var(--mono);color:var(--ink)}
+.out .empty{color:var(--muted);font-size:14px}
 
 .note{background:var(--panel);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;
   padding:16px 20px;font-size:14.5px;margin-top:26px}
