@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tính tỷ lệ thổ cư và giá quy đổi trên mỗi mét thổ cư</title>
+<meta name="description" content="Nhập tổng diện tích, diện tích thổ cư và giá rao để ra tỷ lệ thổ cư, giá trên mỗi mét thổ cư và trên mỗi mét tổng. Tính ngay trên trình duyệt." />
+<link rel="canonical" href="https://chiphinhadat.pages.dev/cong-cu/ty-le-tho-cu/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Tính tỷ lệ thổ cư và giá quy đổi" />
+<meta property="og:url" content="https://chiphinhadat.pages.dev/cong-cu/ty-le-tho-cu/" />
+<link rel="stylesheet" href="../../assets/style.css" />
+</head>
+<body>
+<header class="nav"><div class="wrap"><div class="row">
+  <a class="brand" href="../../"><span class="mk">₫</span>Chi phí nhà đất</a>
+  <nav>
+    <a href="../../">Công cụ</a>
+    <a href="./" aria-current="page">Tỷ lệ thổ cư</a>
+  </nav>
+</div></div></header>
+
+<section class="hero"><div class="wrap">
+  <p class="kick">Công cụ</p>
+  <h1>Tỷ lệ thổ cư và giá quy đổi</h1>
+  <p>Giá rao chia cho tổng diện tích chưa nói lên điều gì. Con số quyết định là giá trên mỗi mét thổ cư, phần đất được xây nhà và ở.</p>
+</div></section>
+
+<main class="wrap">
+  <section class="calc">
+    <div class="form">
+      <div class="field">
+        <label for="tong">Tổng diện tích</label>
+        <div class="inp"><input id="tong" type="number" inputmode="decimal" min="0" placeholder="500" /><span class="u">m²</span></div>
+        <p class="hint">Toàn bộ diện tích lô đất theo tin rao hoặc sổ.</p>
+      </div>
+      <div class="field">
+        <label for="thocu">Diện tích thổ cư</label>
+        <div class="inp"><input id="thocu" type="number" inputmode="decimal" min="0" placeholder="100" /><span class="u">m²</span></div>
+        <p class="hint">Phần đất ở, ghi trong sổ. Phần còn lại thường là đất nông nghiệp hoặc trồng cây lâu năm.</p>
+      </div>
+      <div class="field">
+        <label for="gia">Giá rao</label>
+        <div class="inp"><input id="gia" type="number" inputmode="decimal" min="0" placeholder="3.5" /><span class="u">tỷ đồng</span></div>
+        <p class="hint">Tổng giá cho cả lô. Để trống nếu chỉ muốn xem tỷ lệ.</p>
+      </div>
+    </div>
+
+    <div class="out" id="out">
+      <h3>Kết quả</h3>
+      <div id="empty" class="empty">Nhập tổng diện tích và diện tích thổ cư để xem kết quả.</div>
+      <div id="res" hidden>
+        <div class="big"><span id="tyle">0</span><span class="u">% thổ cư</span></div>
+        <div class="sub" id="conlai"></div>
+        <div class="grid">
+          <div class="c"><span class="k">Giá trên m² thổ cư</span><span class="v" id="gtc">-</span></div>
+          <div class="c"><span class="k">Giá trên m² tổng</span><span class="v" id="gtong">-</span></div>
+          <div class="c"><span class="k">Diện tích không thổ cư</span><span class="v" id="dtkhac">-</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="note"><strong>Công thức.</strong> Tỷ lệ thổ cư = diện tích thổ cư chia tổng diện tích, nhân 100. Giá trên m² thổ cư = giá rao chia diện tích thổ cư. Đây là con số phản ánh đúng chi phí cho phần đất được ở, thường cao hơn giá trên tổng diện tích rất nhiều khi lô đất nhiều đất vườn. Công cụ không lưu gì, không gửi số đi đâu, mọi phép tính chạy ngay trên máy bạn.</p>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <span>Chi phí nhà đất · công cụ tính miễn phí.</span>
+  <a href="../../">Công cụ khác</a>
+</div></footer>
+
+<script>
+  const $ = (id) => document.getElementById(id)
+  const nf = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 })
+  const nf1 = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 1 })
+  // Rút gọn tiền: >= 1 tỷ hiện "x,xx tỷ", >= 1 triệu hiện "xxx triệu", còn lại đồng.
+  function money(d){
+    if (!isFinite(d) || d <= 0) return '-'
+    if (d >= 1e9) return nf1.format(d / 1e9).replace('.', ',') + ' tỷ'
+    if (d >= 1e6) return nf.format(Math.round(d / 1e6)) + ' triệu'
+    return nf.format(Math.round(d)) + ' đ'
+  }
+  function calc(){
+    const tong = parseFloat($('tong').value)
+    const thocu = parseFloat($('thocu').value)
+    const giaTy = parseFloat($('gia').value)
+    const ok = tong > 0 && thocu >= 0 && thocu <= tong
+    $('empty').hidden = ok
+    $('res').hidden = !ok
+    if (!ok) return
+    const tyle = (thocu / tong) * 100
+    $('tyle').textContent = nf1.format(tyle).replace('.', ',')
+    $('conlai').textContent = 'Thổ cư ' + nf.format(thocu) + ' m² trên tổng ' + nf.format(tong) + ' m²'
+    $('dtkhac').textContent = nf.format(tong - thocu) + ' m²'
+    if (giaTy > 0){
+      const gia = giaTy * 1e9
+      $('gtc').textContent = thocu > 0 ? money(gia / thocu) : '-'
+      $('gtong').textContent = money(gia / tong)
+    } else {
+      $('gtc').textContent = '-'; $('gtong').textContent = '-'
+    }
+  }
+  ;['tong','thocu','gia'].forEach((id) => $(id).addEventListener('input', calc))
+</script>
+</body>
+</html>

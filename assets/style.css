@@ -1,0 +1,116 @@
+/* Hộp công cụ nhà đất - hệ thiết kế riêng (KHÁC nút dữ liệu giá đất).
+   Palette: Cobalt + xám lạnh. Không xanh lục, không đất nung. Bo góc 8px.
+   Font system sans + mono cho số. Không em-dash ở chuỗi hiển thị. */
+
+:root{
+  --bg:#f3f6fb; --surface:#ffffff; --panel:#eaeff7; --line:#d9e0ec;
+  --ink:#131a26; --muted:#556074; --faint:#8791a4;
+  --accent:#2b5ce0; --accent-2:#1c44b8; --accent-soft:rgba(43,92,224,.09);
+  --band:#101a2e; --band-ink:#eef3fb; --band-muted:#93a3c2;
+  --r:8px; --maxw:960px;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --mono:ui-monospace,'Cascadia Code','Segoe UI Mono',Consolas,monospace;
+  --shadow:0 1px 2px rgba(19,26,38,.05),0 16px 40px -28px rgba(20,40,90,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0d1420; --surface:#141c2b; --panel:#19233a; --line:#26324c;
+    --ink:#e6ecf6; --muted:#93a1bb; --faint:#66748f;
+    --accent:#5c86f6; --accent-2:#7ba2ff; --accent-soft:rgba(92,134,246,.15);
+    --band:#080d17; --band-ink:#eef3fb; --band-muted:#8393b1;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 18px 44px -30px rgba(0,0,0,.75);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;transition:color .15s}
+a:hover{color:var(--accent-2)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.mono{font-family:var(--mono)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .row{display:flex;align-items:center;gap:20px;height:60px}
+.brand{font-weight:700;letter-spacing:-.2px;color:var(--ink);font-size:16px;display:flex;align-items:center;gap:9px}
+.brand .mk{width:22px;height:22px;border-radius:6px;background:var(--accent);display:grid;place-items:center;
+  color:#fff;font:800 13px/1 var(--mono)}
+.nav nav{margin-left:auto;display:flex;gap:4px}
+.nav nav a{color:var(--muted);font-size:14.5px;font-weight:500;padding:7px 12px;border-radius:6px}
+.nav nav a:hover,.nav nav a[aria-current="page"]{color:var(--ink);background:var(--panel)}
+
+@media (prefers-reduced-motion:no-preference){
+  .rise{opacity:0;transform:translateY(14px);animation:rise .55s cubic-bezier(.16,1,.3,1) forwards}
+  .rise:nth-child(2){animation-delay:.07s}.rise:nth-child(3){animation-delay:.14s}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+
+/* HERO */
+.hero{background:var(--band);color:var(--band-ink);border-bottom:3px solid var(--accent)}
+.hero .wrap{padding:58px 22px 50px}
+.kick{display:inline-flex;align-items:center;gap:10px;font:600 12px/1 var(--sans);
+  letter-spacing:2px;text-transform:uppercase;color:var(--band-muted);margin:0 0 18px}
+.kick::before{content:"";width:24px;height:2px;background:var(--accent)}
+.hero h1{margin:0 0 14px;font-weight:700;font-size:clamp(29px,5vw,44px);line-height:1.12;letter-spacing:-1px;max-width:17ch}
+.hero p{margin:0;color:var(--band-muted);font-size:18px;max-width:56ch}
+
+main{padding:48px 0 36px}
+section{margin-bottom:48px}
+h2{font-weight:700;font-size:23px;letter-spacing:-.4px;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:62ch}
+
+/* THẺ CÔNG CỤ */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tool{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:22px 22px 20px;box-shadow:var(--shadow);
+  transition:transform .18s,box-shadow .18s,border-color .18s}
+.tool:hover{transform:translateY(-3px);border-color:var(--accent)}
+.tool .ic{width:38px;height:38px;border-radius:9px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font:700 18px/1 var(--mono);margin-bottom:14px}
+.tool h3{margin:0 0 6px;font-size:18px;font-weight:700;letter-spacing:-.3px}
+.tool p{margin:0 0 16px;color:var(--muted);font-size:14.5px;flex:1 0 auto}
+.tool .go{font:600 14px var(--sans);color:var(--accent)}
+.tool.soon{opacity:.72}
+.tool.soon .tag{align-self:flex-start;font:600 11px var(--mono);letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--line);padding:3px 8px;border-radius:5px}
+
+/* MÁY TÍNH */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.form{display:grid;gap:16px}
+.field label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.field .hint{color:var(--faint);font-size:12.5px;margin-top:5px}
+.inp{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:0 14px;transition:border-color .15s,box-shadow .15s}
+.inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.inp input{flex:1;border:0;outline:0;background:transparent;color:var(--ink);
+  font:600 17px var(--mono);padding:12px 0;width:100%}
+.inp .u{color:var(--faint);font:500 13px var(--sans);padding-left:8px}
+.field input::placeholder{color:var(--faint)}
+
+.out{background:var(--band);color:var(--band-ink);border-radius:var(--r);padding:24px;position:sticky;top:76px}
+.out h3{margin:0 0 18px;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:var(--band-muted)}
+.out .big{font:700 46px/1 var(--mono);color:#fff;letter-spacing:-1.5px}
+.out .big .u{font:600 18px var(--sans);color:var(--band-muted);letter-spacing:0;margin-left:6px}
+.out .sub{color:var(--band-muted);font-size:14px;margin:8px 0 22px}
+.out .grid{display:grid;gap:1px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden}
+.out .grid .c{background:var(--band);padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.out .grid .c .k{color:var(--band-muted);font-size:13.5px}
+.out .grid .c .v{font:600 17px var(--mono);color:#fff}
+.out .empty{color:var(--band-muted);font-size:14px}
+
+.note{background:var(--panel);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;
+  padding:16px 20px;font-size:14.5px;margin-top:26px}
+.note strong{color:var(--accent-2)}
+
+footer{border-top:1px solid var(--line);background:var(--surface)}
+footer .wrap{padding:28px 22px;color:var(--muted);font-size:14px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
+
+@media (max-width:680px){
+  .tools{grid-template-columns:1fr}
+  .calc{grid-template-columns:1fr}
+  .out{position:static}
+  .hero .wrap{padding:42px 22px 36px}
+}
