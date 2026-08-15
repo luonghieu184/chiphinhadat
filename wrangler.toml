@@ -1,0 +1,10 @@
+# Cloudflare Workers - Static Assets (site tĩnh, không có Worker script).
+# `npx wrangler deploy` sẽ đăng thư mục public/ làm assets-only Worker.
+name = "chiphinhadat"
+compatibility_date = "2026-08-15"
+
+[assets]
+directory = "./public"
+# URL có / cuối tự map tới index.html trong thư mục; không phải SPA nên không rewrite về root.
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"

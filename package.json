@@ -1,0 +1,12 @@
+{
+  "name": "chiphinhadat",
+  "private": true,
+  "description": "Hộp công cụ nhà đất - site tĩnh trên Cloudflare Workers Static Assets",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
