@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chiphinhadat.luonghieu184.workers.dev/sitemap.xml
